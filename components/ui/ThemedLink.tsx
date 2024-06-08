@@ -1,14 +1,17 @@
-import { Text, type TextProps, StyleSheet } from 'react-native';
+import {Text, type TextProps, StyleSheet} from 'react-native';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
+import {Link} from "expo-router";
+import {ExpoRouter} from "@/.expo/types/router";
+import * as React from "react";
 
-export type ThemedTextProps = TextProps & {
+export type ThemedTextProps = React.PropsWithChildren<ExpoRouter.LinkProps> & {
   lightColor?: string;
   darkColor?: string;
-  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
+  type?: 'default';
 };
 
-export function ThemedText({
+export function ThemedLink({
   style,
   lightColor,
   darkColor,
@@ -18,14 +21,10 @@ export function ThemedText({
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
   return (
-    <Text
+    <Link
       style={[
         { color },
         type === 'default' ? styles.default : undefined,
-        type === 'title' ? styles.title : undefined,
-        type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
-        type === 'subtitle' ? styles.subtitle : undefined,
-        type === 'link' ? styles.link : undefined,
         style,
       ]}
       {...rest}
